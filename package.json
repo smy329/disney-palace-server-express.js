@@ -1,0 +1,16 @@
+{
+  "name": "disney-palace-server",
+  "version": "1.0.0",
+  "description": "This project is a website that allows users to buy and sell Disney dolls. The website is built with Express in the backend and uses a MongoDB database to store data. Users can create an account and upload their own dolls for sale. They can also browse through other users' listings and make offers on dolls that they are interested in.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express.js",
+    "mern-stack",
+    "mongodb"
+  ],
+  "author": "Syed Mohammad Yasir",
+  "license": "ISC"
+}
