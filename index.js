@@ -23,9 +23,26 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     client.connect();
 
-    //text
-    app.get('/test', (req, res) => {
-      res.send('Testing is going on');
+    //collections
+    const subCategoryCollection = client
+      .db('disney-palace')
+      .collection('subCategories');
+    const categoryToysCollection = client
+      .db('disney-palace')
+      .collection('categoryToys');
+
+    app.get('/sub-categories', async (req, res) => {
+      const result = await subCategoryCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get('/category-toys/:subCategory', async (req, res) => {
+      const subCategory = req.params.subCategory;
+      console.log(subCategory);
+      const query = { subCategory: subCategory };
+      const result = await categoryToysCollection.find(query).toArray();
+      console.log(result);
+      res.send(result);
     });
 
     // Send a ping to confirm a successful connection
