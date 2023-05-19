@@ -30,6 +30,7 @@ async function run() {
     const categoryToysCollection = client
       .db('disney-palace')
       .collection('categoryToys');
+    const toysCollection = client.db('disney-palace').collection('toys');
 
     app.get('/sub-categories', async (req, res) => {
       const result = await subCategoryCollection.find().toArray();
@@ -42,6 +43,11 @@ async function run() {
       const query = { subCategory: subCategory };
       const result = await categoryToysCollection.find(query).toArray();
       console.log(result);
+      res.send(result);
+    });
+
+    app.get('/toys', async (req, res) => {
+      const result = await toysCollection.find().toArray();
       res.send(result);
     });
 
