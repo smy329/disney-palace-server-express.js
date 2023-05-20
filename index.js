@@ -47,7 +47,21 @@ async function run() {
     });
 
     app.get('/toys', async (req, res) => {
-      const result = await toysCollection.find().toArray();
+      const result = await toysCollection.find().limit(20).toArray();
+      res.send(result);
+    });
+
+    app.post('/toys', async (req, res) => {
+      const toyData = req.body;
+      console.log(toyData);
+      const result = await toysCollection.insertOne(toyData);
+      res.send(result);
+    });
+
+    app.get('/toys/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await toysCollection.findOne(query);
       res.send(result);
     });
 
