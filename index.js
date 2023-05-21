@@ -23,7 +23,7 @@ let sortCode = 0;
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    client.connect();
+    //client.connect();
 
     //collections
     const subCategoryCollection = client
@@ -107,6 +107,7 @@ async function run() {
     app.put('/my-toys/update/:id', async (req, res) => {
       const id = req.params.id;
       const updatedToyData = req.body;
+      console.log(updatedToyData);
       const query = { _id: new ObjectId(id) };
       const updateToy = {
         $set: updatedToyData,
