@@ -18,6 +18,8 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+let sortCode = 0;
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -37,14 +39,14 @@ async function run() {
       res.send(result);
     });
 
-    app.get('/category-toys/:subCategory', async (req, res) => {
-      const subCategory = req.params.subCategory;
-      console.log(subCategory);
-      const query = { subCategory: subCategory };
-      const result = await categoryToysCollection.find(query).toArray();
-      console.log(result);
-      res.send(result);
-    });
+    // app.get('/category-toys/:subCategory', async (req, res) => {
+    //   const subCategory = req.params.subCategory;
+    //   console.log(subCategory);
+    //   const query = { subCategory: subCategory };
+    //   const result = await categoryToysCollection.find(query).toArray();
+    //   console.log(result);
+    //   res.send(result);
+    // });
 
     app.get('/toys', async (req, res) => {
       const result = await toysCollection.find().limit(20).toArray();
@@ -65,10 +67,39 @@ async function run() {
       res.send(result);
     });
 
+    app.get('/toys/subCategory/:name', async (req, res) => {
+      const subCategory = req.params.name;
+      //console.log(subCategory);
+      const query = { subCategory: subCategory };
+      const result = await toysCollection.find(query).toArray();
+      console.log(result);
+      res.send(result);
+    });
+
     app.get('/my-toys/:email', async (req, res) => {
       const email = req.params.email;
       const query = { sellerEmail: email };
       const result = await toysCollection.find(query).toArray();
+      console.log(result);
+      res.send(result);
+    });
+
+    app.get('/my-toys/sort/:sort', async (req, res) => {
+      const sortType = req.params.sort;
+      let sortCode = 1;
+      if (sortType === 'desc') {
+        sortCode = -1;
+      }
+      console.log(sortType, sortCode);
+      // const options = {
+      //   // sort matched documents in descending order by rating
+      //   sort: { price: -1 },
+      // };
+      //const result = await toysCollection.find(options).toArray();
+      const result = await toysCollection
+        .find()
+        .sort({ price: sortCode })
+        .toArray();
       console.log(result);
       res.send(result);
     });
